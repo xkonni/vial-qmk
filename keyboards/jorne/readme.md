@@ -16,10 +16,14 @@ Enter the bootloader in 2 ways:
 * **Physical reset button**: Briefly press the reset button on the PCB
 * **Keycode in layout**: Press the key mapped to `QK_BOOT`
 
-## Make 
+## Make
 
 Make example for this keyboard (after setting up your build environment):
 
     make jorne/rev1:default
+
+To build for another microcontroller, e.g. `rp2040` use the `CONVERT_TO` environment option
+
+    make jorne/rev1:default -e CONVERT_TO=promicro_rp2040
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
