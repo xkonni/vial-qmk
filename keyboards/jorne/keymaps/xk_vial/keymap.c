@@ -26,19 +26,22 @@ enum custom_keycodes {
 #define EQL_LAL MT(MOD_LALT, KC_EQL)
 #define BSL_RAL MT(MOD_RALT, KC_BSLS)
 #define BSP_LSH MT(MOD_LSFT, KC_BSPC)
-#define SPC_RSH MT(MOD_RSFT, KC_SPC)
 #define DEL_RSE LT(_RAISE, KC_DEL)
 #define TAB_RSE LT(_RAISE, KC_TAB)
 #define ENT_LWR LT(_LOWER, KC_ENT)
 #define ESC_LWR LT(_LOWER, KC_ESC)
 
+#define ESC_LCT MT(MOD_LCTL, KC_ESC)
+#define QUO_LWR LT(_LOWER, KC_QUOT)
+#define Z_LALT  MT(MOD_LALT, KC_Z)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT(
-  KC_LGUI, KC_GRV,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, RGUI_T(KC_RBRC),
-           KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, RCTL_T(KC_QUOT),
-           KC_LALT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,         KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, BSL_RAL,
-                                      TAB_RSE, SPC_RSH, ENT_LWR,      ESC_LWR, BSP_LSH, DEL_RSE
+  _______, KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, _______,
+           ESC_LCT, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, QUO_LWR,
+           KC_LSFT, Z_LALT,  KC_X,    KC_C,    KC_V,    KC_B,         KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+                                      KC_LGUI, MO(1),   KC_SPC,       KC_ENTER, MO(2),  KC_RALT
 ),
 
 [_LOWER] = LAYOUT(
@@ -67,6 +70,74 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
+
+#ifdef OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
+
+
+// WPM-responsive animation stuff here
+#define IDLE_FRAMES 2
+#define IDLE_SPEED 40 // below this wpm value your animation will idle
+
+#define ANIM_FRAME_DURATION 200 // how long each frame lasts in ms
+// #define SLEEP_TIMER 60000 // should sleep after this period of 0 wpm, needs fixing
+#define ANIM_SIZE 636 // number of bytes in array, minimize for adequate firmware size, max is 1024
+
+uint32_t anim_timer = 0;
+uint32_t anim_sleep = 0;
+uint8_t current_idle_frame = 0;
+
+// Credit to u/Pop-X- for the initial code. You can find his commit here https://github.com/qmk/qmk_firmware/pull/9264/files#diff-303f6e3a7a5ee54be0a9a13630842956R196-R333.
+static void render_anim(void) {
+    static const char PROGMEM idle[IDLE_FRAMES][ANIM_SIZE] = {
+        {
+        0,  0,192,192,192,192,192,192,192,248,248, 30, 30,254,254,248,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  3,  3,  3,  3,  3,255,255,255,255,255,255,255,128,128,128,128,128,128,128,128,128,128,128,128,128,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,127,127,255,255,255,255,255,159,159,135,135,129,129,129, 97, 97, 25, 25,  7,  7,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1, 97, 97,127,  1,  1, 97, 97,127,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0
+        },
+        {
+        0,  0,128,128,128,128,128,128,128,240,240, 60, 60,252,252,240,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  7,  7,  7,  7,  7,255,255,254,254,255,255,255,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,255,255,255,255,255,255,255, 63, 63, 15, 15,  3,  3,  3,195,195, 51, 51, 15, 15,  3,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  3,  3, 99, 99,127,  3,  3, 99, 99,127,  3,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0
+        }
+    };
+
+    //assumes 1 frame prep stage
+    void animation_phase(void) {
+            current_idle_frame = (current_idle_frame + 1) % IDLE_FRAMES;
+            oled_write_raw_P(idle[abs((IDLE_FRAMES-1)-current_idle_frame)], ANIM_SIZE);
+    }
+
+        if(timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
+            anim_timer = timer_read32();
+            animation_phase();
+        }
+    }
+
+bool oled_task_user(void) {
+    render_anim();
+    oled_set_cursor(0,6);
+    if (is_keyboard_left()) {
+        oled_write_P(PSTR("-----\n"), false);
+        // Host Keyboard Layer Status
+        oled_write_P(PSTR("L "), false);
+        switch (get_highest_layer(layer_state)) {
+            case 0:
+                oled_write_P(PSTR("DEF\n"), false);
+                break;
+            case 1:
+                oled_write_P(PSTR("RSE\n"), false);
+                break;
+            case 2:
+                oled_write_P(PSTR("LWR\n"), false);
+                break;
+            case 3:
+                oled_write_P(PSTR("ADJ\n"), false);
+                break;
+        }
+        oled_write_P(PSTR("-----\n"), false);
+        oled_write_P(PSTR("W "), false);
+        oled_write_P(get_u8_str(get_current_wpm(), ' '), false);
+    }
+    return false;
+}
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
