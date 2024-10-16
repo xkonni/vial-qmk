@@ -35,6 +35,7 @@ enum custom_keycodes {
 #define QUO_LWR LT(_LOWER, KC_QUOT)
 #define Z_LALT  MT(MOD_LALT, KC_Z)
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT(
@@ -78,6 +79,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_
 // WPM-responsive animation stuff here
 #define IDLE_FRAMES 2
 #define IDLE_SPEED 40 // below this wpm value your animation will idle
+#define IDLE_SLEEP 1  // below this wpm value the display turns off
 
 #define ANIM_FRAME_DURATION 200 // how long each frame lasts in ms
 // #define SLEEP_TIMER 60000 // should sleep after this period of 0 wpm, needs fixing
@@ -111,6 +113,12 @@ static void render_anim(void) {
     }
 
 bool oled_task_user(void) {
+    uint8_t current_wpm = get_current_wpm();
+    if (current_wpm <= IDLE_SLEEP) {
+        // in sleep mode => turn display off
+        oled_off();
+        return false;
+    }
     render_anim();
     oled_set_cursor(0,6);
     if (is_keyboard_left()) {
@@ -133,7 +141,7 @@ bool oled_task_user(void) {
         }
         oled_write_P(PSTR("-----\n"), false);
         oled_write_P(PSTR("W "), false);
-        oled_write_P(get_u8_str(get_current_wpm(), ' '), false);
+        oled_write_P(get_u8_str(current_wpm, ' '), false);
     }
     return false;
 }
