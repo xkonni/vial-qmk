@@ -1,3 +1,7 @@
+# SRC += ./lib/logo.c
+SRC += ./lib/layer_status/layer_status.c
+SRC += ./lib/bongocat/bongocat.c
+
 VIA_ENABLE          = yes
 VIAL_ENABLE         = yes
 LTO_ENABLE          = yes		# compile optimization, reduce size
