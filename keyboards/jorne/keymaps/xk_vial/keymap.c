@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LOWER] = LAYOUT(
   _______, KC_UNDS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,        KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  F12_RGU,
-           PLS_LCT, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, MIN_RCT,
+           PLS_LCT, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_RPRN, MIN_RCT,
            EQL_LAL, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
                                       _______, _______, _______,      _______, _______, _______
 ),
@@ -77,14 +77,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #ifdef OLED_ENABLE
     bool oled_task_user(void) {
-        if (is_keyboard_left()) {
-            render_bongocat();
-            // oled_write_P(get_u8_str(get_current_wpm(), ' '), false);
-        }
-       else {
-            render_layer_status();
-            // oled_write_P(get_u8_str(get_current_wpm(), ' '), false);
-        }
+    //     if (is_keyboard_left()) {
+    //         render_bongocat();
+    //         // oled_write_P(get_u8_str(get_current_wpm(), ' '), false);
+    //     }
+    //    else {
+    //         render_layer_status();
+    //         // oled_write_P(get_u8_str(get_current_wpm(), ' '), false);
+    //     }
+        render_layer_status();
         return true;
     }
 #endif
