@@ -7,8 +7,10 @@ VIAL_ENABLE         = yes
 LTO_ENABLE          = yes		# compile optimization, reduce size
 
 # Can't have RGBLIGHT and RGB_MATRIX at the same time.
-RGBLIGHT_ENABLE     = yes
-RGB_MATRIX_ENABLE   = no
+RGBLIGHT_ENABLE     = no
+RGB_MATRIX_ENABLE   = yes
+RGB_MATRIX_DRIVER   = ws2812
+VIALRGB_ENABLE 		= yes
 
 OLED_ENABLE         = yes
 OLED_DRIVER 		= ssd1306

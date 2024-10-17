@@ -2,7 +2,7 @@
     "name": "Jorne",
     "vendorId": "0x4753",
     "productId": "0x0001",
-    "lighting": "qmk_rgblight",
+    "lighting": "vialrgb",
     "matrix": {"rows": 8, "cols": 6},
     "layouts": {
         "keymap": [
