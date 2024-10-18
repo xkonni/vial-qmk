@@ -2,7 +2,7 @@
 #   change to "no" to disable the options, or define them in the Makefile in
 #   the appropriate keymap folder that will get included automatically
 #
-RGBLIGHT_ENABLE = yes       # Enable WS2812 RGB underlight. 
+RGBLIGHT_ENABLE = yes       # Enable WS2812 RGB underlight.
 VIA_ENABLE      = yes
 VIAL_ENABLE         = yes
 # Bootloader selection

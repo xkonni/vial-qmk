@@ -23,4 +23,48 @@ static void render_logo(void) {
     };
     oled_write_raw_P(raw_logo, sizeof(raw_logo));
 }
+
+enum layers {
+    _QWERTY = 0,
+    _LOWER,
+    _RAISE,
+    _ADJUST,
+};
+
+static void render_status(void) {
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+    switch (get_highest_layer(layer_state)) {
+        case _QWERTY:
+            oled_write_P(PSTR("Default\n"), false);
+            break;
+        case _LOWER:
+            oled_write_P(PSTR("Lower\n"), false);
+            break;
+        case _RAISE:
+            oled_write_P(PSTR("Raise\n"), false);
+            break;
+        case _ADJUST:
+            oled_write_P(PSTR("Adjust\n"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undefined\n"), false);
+    }
+
+    // Host Keyboard LED Status
+    led_t led_state = host_keyboard_led_state();
+    oled_write_P(led_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "), false);
+    oled_write_P(led_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "), false);
+    oled_write_P(led_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
+}
+
+bool oled_task_kb(void) {
+  if (!oled_task_user()) { return false; }
+    if (is_keyboard_left()) {
+        render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+    } else {
+        render_logo();
+    }
+    return true;
+}
 #endif
