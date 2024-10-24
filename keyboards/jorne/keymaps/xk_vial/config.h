@@ -9,3 +9,5 @@
 // choose IS_LEFT or IS_RIGHT for compilation and flash firmware
 #define IS_LEFT 1
 // #define IS_RIGHT 1
+
+#define USB_SUSPEND_WAKEUP_DELAY 200
