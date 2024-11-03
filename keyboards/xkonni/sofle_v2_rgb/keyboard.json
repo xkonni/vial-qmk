@@ -1,7 +1,7 @@
 {
-    "manufacturer": "Brian Low",
+    "manufacturer": "xkonni",
     "keyboard_name": "Sofle v2.1 RGB",
-    "maintainer": "Brian Low <github@brianlow.com>",
+    "maintainer": "xkonni <xkonni@posteo.de>",
     "build": {
         "lto": true
     },
@@ -14,10 +14,13 @@
     },
     "features": {
         "bootmagic": true,
-        "oled": true,
-        "rgb_matrix": true,
+        "console": false,
+        "encoder": true,
+        "encoder_map": true,
         "extrakey": true,
-        "mousekey": true
+        "mousekey": true,
+        "oled": true,
+        "rgb_matrix": true
     },
     "development_board": "promicro",
     "rgb_matrix": {
