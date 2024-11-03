@@ -1,0 +1,15 @@
+VIA_ENABLE = yes
+VIAL_ENABLE = yes
+OLED_ENABLE = yes
+ENCODER_ENABLE = yes
+CONSOLE_ENABLE = no
+EXTRAKEY_ENABLE = yes
+ENCODER_MAP_ENABLE = yes
+LTO_ENABLE = no
+VIALRGB_ENABLE = yes
+QMK_SETTINGS = no
+MOUSEKEY_ENABLE = no
+RGB_MATRIX_ENABLE = yes
+CONVERT_TO = rp2040_ce
+
+SRC += ./lib/layer_status/layer_status.c

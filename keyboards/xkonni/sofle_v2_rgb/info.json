@@ -1,0 +1,11 @@
+{
+    "keyboard_name": "Sofle rev2_1 info",
+    "features": {
+        "bootmagic": true,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "encoder": true,
+        "oled": true
+    }
+}
