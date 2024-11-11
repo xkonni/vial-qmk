@@ -51,13 +51,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     ESC_LCT, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                        KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_MUTE,   KC_MPLY, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                     KC_NO,   KC_LALT, KC_LGUI, FN_MO13, KC_SPC,    KC_ENT,  FN_MO23, KC_RALT, KC_NO,   KC_NO
+                     KC_NO,   KC_NO,   KC_LGUI, FN_MO13, KC_SPC,    KC_ENT,  FN_MO23, KC_RALT, KC_NO,   KC_NO
 ),
 [_LOWER] = LAYOUT(
     KC_NO,   KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,                       KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_TRNS,
     KC_GRV,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_NO,
-    ESC_LCT, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,
-    KC_LSFT, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_NO,     KC_NO,   KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_PSCR, KC_TRNS,
+    KC_TRNS, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                        KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,   KC_NO,
+    KC_TRNS, KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,    KC_NO,     KC_NO,   KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_PSCR, KC_TRNS,
                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
 ),
 [_RAISE] = LAYOUT(
@@ -91,8 +91,8 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
-    { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
-    { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
-    { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_MPRV, KC_MNXT) }
+    { ENCODER_CCW_CW(KC_NO, KC_NO), ENCODER_CCW_CW(KC_NO, KC_NO) },
+    { ENCODER_CCW_CW(KC_NO, KC_NO), ENCODER_CCW_CW(KC_NO, KC_NO) },
+    { ENCODER_CCW_CW(KC_NO, KC_NO), ENCODER_CCW_CW(KC_NO, KC_NO) }
 };
 #endif
