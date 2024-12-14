@@ -6,26 +6,10 @@
 #define VIAL_UNLOCK_COMBO_ROWS {0, 0}
 #define VIAL_UNLOCK_COMBO_COLS {0, 1}
 
-#define MASTER_LEFT
 // choose IS_LEFT or IS_RIGHT for compilation and flash firmware
 #define IS_LEFT 1
 // #define IS_RIGHT 1
 
-// #ifdef IS_RIGHT
-// cirque trackpad
-#define POINTING_DEVICE_ROTATION_180
-#define POINTING_DEVICE_INVERT_X
-#define POINTING_DEVICE_INVERT_Y
-// Enable use of pointing device on slave split.
-#define SPLIT_POINTING_ENABLE
-// Pointing device is on the right split.
-#define POINTING_DEVICE_RIGHT
-#define CIRQUE_PINNACLE_DIAMETER_MM 40
-#define CIRQUE_PINNACLE_TAP_ENABLE
-#define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
-// #endif
-
-// RGB
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
 
 #define USB_SUSPEND_WAKEUP_DELAY 200
